@@ -1,7 +1,8 @@
 /* 
  * Labora Clinical Lab System - TailwindCSS Theme
- * Modern UI dengan TailwindCSS + Flowbite
+ * Modern UI dengan TailwindCSS + Flowbite + Enhanced Medical Components
  * Responsive, accessible, dan highly customizable
+ * Enhanced with advanced medical visualization & workflow components
  */
 
 @tailwind base;
@@ -12,9 +13,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ==========================================================================
-   Custom Base Styles
+   ENHANCED MEDICAL COLOR SYSTEM
    ========================================================================== */
 @layer base {
+  :root {
+    /* Enhanced Medical Palette */
+    --lab-critical-high: #dc2626;
+    --lab-critical-low: #2563eb;
+    --lab-abnormal-high: #f59e0b;
+    --lab-abnormal-low: #06b6d4;
+    --lab-normal: #059669;
+    --lab-pending: #6b7280;
+    
+    /* Specimen Type Colors */
+    --specimen-blood: #ef4444;
+    --specimen-serum: #f59e0b;
+    --specimen-plasma: #eab308;
+    --specimen-urine: #fbbf24;
+    --specimen-stool: #92400e;
+    --specimen-csf: #06b6d4;
+    --specimen-tissue: #ec4899;
+    
+    /* Urgency Levels */
+    --urgency-stat: #dc2626;
+    --urgency-urgent: #f59e0b;
+    --urgency-routine: #6b7280;
+    
+    /* Test Status Workflow */
+    --status-registered: #3b82f6;
+    --status-collected: #8b5cf6;
+    --status-received: #06b6d4;
+    --status-processing: #0891b2;
+    --status-analyzed: #059669;
+    --status-verified: #10b981;
+    --status-delivered: #22c55e;
+    --status-cancelled: #ef4444;
+    
+    /* UI Enhancement */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 15px rgba(37, 99, 235, 0.3);
+    
+    /* Legacy Colors for Compatibility */
+    --medical-primary: #2563eb;
+    --medical-secondary: #059669;
+    --medical-accent: #f59e0b;
+    --medical-danger: #dc2626;
+    --medical-warning: #f59e0b;
+    --medical-success: #059669;
+    --status-pending: #6b7280;
+    --status-processing: #2563eb;
+    --status-completed: #059669;
+    --status-rejected: #dc2626;
+    --status-urgent: #f59e0b;
+    --bg-medical-light: #f8fafc;
+    --bg-medical-dark: #1e293b;
+    --border-medical: #e2e8f0;
+    --border-medical-focus: #2563eb;
+  }
+
+  /* Custom Animation Keyframes */
+  @keyframes scan {
+    0% { top: 0; }
+    50% { top: 50%; }
+    100% { top: 100%; }
+  }
+
+  /* Base HTML Styling */
   html {
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     scroll-behavior: smooth;
@@ -275,6 +342,473 @@
   .labora-modal-footer {
     @apply px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end space-x-3;
   }
+
+  /* Breadcrumb Components */
+  .labora-breadcrumb {
+    @apply flex items-center space-x-2 text-sm;
+  }
+  
+  .labora-breadcrumb-item {
+    @apply flex items-center text-gray-500 hover:text-gray-700 transition-colors duration-200;
+  }
+  
+  .labora-breadcrumb-item.active {
+    @apply text-gray-900 font-medium;
+  }
+  
+  .labora-breadcrumb-separator {
+    @apply text-gray-300 mx-2;
+  }
+  
+  /* Stats Card Components */
+  .labora-stats-card {
+    @apply bg-white rounded-xl shadow-card p-6 border border-gray-200 transition-all duration-200 hover:shadow-dropdown;
+  }
+  
+  .labora-stats-card.gradient-blue {
+    @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white border-blue-500;
+  }
+  
+  .labora-stats-card.gradient-green {
+    @apply bg-gradient-to-r from-green-500 to-green-600 text-white border-green-500;
+  }
+  
+  .labora-stats-card.gradient-yellow {
+    @apply bg-gradient-to-r from-yellow-500 to-yellow-600 text-white border-yellow-500;
+  }
+  
+  .labora-stats-card.gradient-red {
+    @apply bg-gradient-to-r from-red-500 to-red-600 text-white border-red-500;
+  }
+  
+  .labora-stats-icon {
+    @apply p-3 rounded-full bg-opacity-50;
+  }
+  
+  .labora-stats-number {
+    @apply text-3xl font-bold;
+  }
+  
+  .labora-stats-label {
+    @apply text-sm opacity-90;
+  }
+  
+  .labora-stats-change {
+    @apply text-xs mt-1 opacity-80;
+  }
+  
+  /* Activity/Timeline Components */
+  .labora-activity-item {
+    @apply flex items-center space-x-3 p-3 rounded-lg;
+  }
+  
+  .labora-activity-item.success {
+    @apply bg-green-50;
+  }
+  
+  .labora-activity-item.info {
+    @apply bg-blue-50;
+  }
+  
+  .labora-activity-item.warning {
+    @apply bg-yellow-50;
+  }
+  
+  .labora-activity-item.danger {
+    @apply bg-red-50;
+  }
+  
+  .labora-activity-icon {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-sm;
+  }
+  
+  .labora-activity-icon.success {
+    @apply bg-green-100 text-green-600;
+  }
+  
+  .labora-activity-icon.info {
+    @apply bg-blue-100 text-blue-600;
+  }
+  
+  .labora-activity-icon.warning {
+    @apply bg-yellow-100 text-yellow-600;
+  }
+  
+  .labora-activity-icon.danger {
+    @apply bg-red-100 text-red-600;
+  }
+  
+  .labora-activity-content {
+    @apply flex-1;
+  }
+  
+  .labora-activity-title {
+    @apply text-sm font-medium text-gray-900;
+  }
+  
+  .labora-activity-subtitle {
+    @apply text-xs text-gray-500;
+  }
+
+  /* === MEDICAL WORKFLOW COMPONENTS === */
+  /* Comprehensive component library for lab operations */
+  
+  /* 1. SPECIMEN TRACKING COMPONENTS */
+  .labora-specimen-tracker {
+    @apply bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6 relative;
+  }
+  
+  .labora-specimen-card {
+    @apply bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all duration-200;
+  }
+  
+  .labora-specimen-status {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .labora-specimen-status.collected {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .labora-specimen-status.in-transit {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .labora-specimen-status.received {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .labora-specimen-status.rejected {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .labora-specimen-timeline {
+    @apply relative pl-8 space-y-4;
+  }
+  
+  .labora-specimen-timeline::before {
+    @apply absolute left-3 top-0 bottom-0 w-0.5 bg-gray-200;
+    content: '';
+  }
+  
+  .labora-timeline-item {
+    @apply relative;
+  }
+  
+  .labora-timeline-marker {
+    @apply absolute -left-6 top-1 w-4 h-4 rounded-full border-2 bg-white z-10;
+  }
+  
+  .labora-timeline-marker.completed {
+    @apply border-green-500 bg-green-500;
+  }
+  
+  .labora-timeline-marker.active {
+    @apply border-blue-500 bg-blue-500;
+  }
+  
+  .labora-timeline-marker.pending {
+    @apply border-gray-300 bg-white;
+  }
+  
+  .labora-barcode-scanner {
+    @apply fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50;
+  }
+  
+  .labora-scanner-overlay {
+    @apply relative w-80 h-80 border-2 border-white rounded-lg bg-black;
+  }
+  
+  .labora-scanner-result {
+    @apply bg-white rounded-lg p-4 mt-4 text-center;
+  }
+  
+  /* 2. TEST MANAGEMENT COMPONENTS */
+  .labora-test-selector {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 max-h-96 overflow-y-auto;
+  }
+  
+  .labora-test-item {
+    @apply border border-gray-200 rounded-lg p-4 cursor-pointer transition-all duration-200 hover:border-blue-500 hover:shadow-md;
+  }
+  
+  .labora-test-item.selected {
+    @apply border-blue-500 bg-blue-50 ring-2 ring-blue-200;
+  }
+  
+  .labora-test-catalog {
+    @apply bg-white rounded-lg shadow-md;
+  }
+  
+  .labora-test-category {
+    @apply border-b border-gray-200 p-4 font-medium text-gray-900 bg-gray-50;
+  }
+  
+  .labora-order-summary {
+    @apply bg-blue-50 border border-blue-200 rounded-lg p-4 sticky top-4;
+  }
+  
+  .labora-order-item {
+    @apply flex justify-between items-center py-2 border-b border-blue-100 last:border-b-0;
+  }
+  
+  .labora-order-total {
+    @apply border-t border-blue-300 pt-4 mt-4 font-semibold text-lg;
+  }
+  
+  .labora-urgency-selector {
+    @apply flex space-x-2;
+  }
+  
+  .labora-urgency-option {
+    @apply px-4 py-2 rounded-lg border cursor-pointer transition-all duration-200;
+  }
+  
+  .labora-urgency-option.routine {
+    @apply border-gray-300 text-gray-700 hover:bg-gray-50;
+  }
+  
+  .labora-urgency-option.urgent {
+    @apply border-yellow-300 text-yellow-700 hover:bg-yellow-50;
+  }
+  
+  .labora-urgency-option.stat {
+    @apply border-red-300 text-red-700 hover:bg-red-50;
+  }
+  
+  .labora-urgency-option.selected {
+    @apply ring-2 ring-offset-2;
+  }
+  
+  .labora-urgency-option.routine.selected {
+    @apply ring-gray-500 bg-gray-100;
+  }
+  
+  .labora-urgency-option.urgent.selected {
+    @apply ring-yellow-500 bg-yellow-100;
+  }
+  
+  .labora-urgency-option.stat.selected {
+    @apply ring-red-500 bg-red-100;
+  }
+  
+  /* 3. RESULT PROCESSING COMPONENTS */
+  .labora-result-input {
+    @apply relative border border-gray-300 rounded-lg p-4 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200;
+  }
+  
+  .labora-result-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+  
+  .labora-result-item {
+    @apply border border-gray-200 rounded-lg p-4 space-y-3;
+  }
+  
+  .labora-result-item.critical {
+    @apply border-red-500 bg-red-50;
+  }
+  
+  .labora-result-item.abnormal {
+    @apply border-yellow-500 bg-yellow-50;
+  }
+  
+  .labora-result-field {
+    @apply space-y-2;
+  }
+  
+  .labora-result-input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  }
+  
+  .labora-result-input-field.critical {
+    @apply border-red-500 ring-2 ring-red-200;
+  }
+  
+  .labora-reference-ranges {
+    @apply text-xs text-gray-500 mt-1;
+  }
+  
+  .labora-result-indicator {
+    @apply inline-flex items-center px-2 py-1 rounded text-xs font-medium;
+  }
+  
+  .labora-result-indicator.normal {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .labora-result-indicator.abnormal {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .labora-result-indicator.critical {
+    @apply bg-red-600 text-white animate-pulse;
+  }
+  
+  .labora-verification-queue {
+    @apply space-y-4;
+  }
+  
+  .labora-verification-item {
+    @apply bg-yellow-50 border border-yellow-200 rounded-lg p-4;
+  }
+  
+  .labora-verification-header {
+    @apply flex justify-between items-center mb-3;
+  }
+  
+  .labora-verification-actions {
+    @apply flex space-x-2 mt-4;
+  }
+  
+  /* 4. PATIENT MANAGEMENT COMPONENTS */
+  .labora-patient-search {
+    @apply relative w-full max-w-md;
+  }
+  
+  .labora-patient-dropdown {
+    @apply absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto z-50;
+  }
+  
+  .labora-patient-item {
+    @apply p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0;
+  }
+  
+  .labora-patient-card {
+    @apply bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow;
+  }
+  
+  .labora-patient-header {
+    @apply flex items-center justify-between mb-4;
+  }
+  
+  .labora-patient-info {
+    @apply space-y-2;
+  }
+  
+  .labora-patient-avatar {
+    @apply w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium;
+  }
+  
+  .labora-patient-demographics {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+  
+  .labora-patient-history {
+    @apply space-y-4;
+  }
+  
+  .labora-patient-history-item {
+    @apply border-l-4 border-blue-200 pl-4 py-2;
+  }
+  
+  /* 5. CRITICAL ALERT COMPONENTS */
+  .labora-critical-alert {
+    @apply fixed top-4 right-4 bg-red-50 border-2 border-red-500 rounded-lg p-6 shadow-xl z-50 animate-pulse max-w-sm;
+  }
+  
+  .labora-panic-value {
+    @apply bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-center mb-4;
+  }
+  
+  .labora-alert-header {
+    @apply flex items-center space-x-2 mb-3;
+  }
+  
+  .labora-alert-icon {
+    @apply w-6 h-6 text-red-600;
+  }
+  
+  .labora-alert-title {
+    @apply font-bold text-red-900;
+  }
+  
+  .labora-alert-content {
+    @apply space-y-2 mb-4;
+  }
+  
+  .labora-alert-actions {
+    @apply flex space-x-2;
+  }
+  
+  .labora-system-alert {
+    @apply bg-yellow-50 border border-yellow-200 rounded-lg p-4;
+  }
+  
+  .labora-equipment-alert {
+    @apply bg-orange-50 border border-orange-200 rounded-lg p-4;
+  }
+  
+  /* 6. QUALITY CONTROL COMPONENTS */
+  .labora-qc-chart {
+    @apply bg-white border border-gray-200 rounded-lg p-4;
+  }
+  
+  .labora-qc-violation {
+    @apply bg-red-50 border border-red-200 rounded-lg p-4 mb-4;
+  }
+  
+  .labora-calibration-tracker {
+    @apply bg-white rounded-lg shadow-md p-4;
+  }
+  
+  .labora-equipment-status {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .labora-equipment-status.online {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .labora-equipment-status.offline {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .labora-equipment-status.maintenance {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  /* 7. MOBILE-SPECIFIC MEDICAL COMPONENTS */
+  .labora-mobile-scanner {
+    @apply block lg:hidden;
+  }
+  
+  .labora-mobile-result-entry {
+    @apply space-y-4;
+  }
+  
+  .labora-mobile-result-entry input {
+    @apply min-h-12 text-lg; /* Touch-friendly for gloves */
+  }
+  
+  .labora-mobile-specimen-list {
+    @apply space-y-2;
+  }
+  
+  .labora-mobile-alerts {
+    @apply fixed bottom-4 left-4 right-4 z-40;
+  }
+  
+  /* 8. TURNAROUND TIME COMPONENTS */
+  .labora-tat-monitor {
+    @apply bg-white rounded-lg shadow-md p-4;
+  }
+  
+  .labora-tat-indicator {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .labora-tat-indicator.on-time {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .labora-tat-indicator.delayed {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .labora-tat-indicator.critical {
+    @apply bg-red-600 text-white animate-pulse;
+  }
 }
 
 /* ==========================================================================
@@ -342,11 +876,717 @@
       @apply p-0;
     }
   }
+  
+  /* === ADVANCED MEDICAL COMPONENTS === */
+  
+  /* === RESULT INTERPRETATION COMPONENTS === */
+  .labora-result-visualization {
+    @apply relative p-6 bg-white rounded-xl border border-gray-200;
+  }
+  
+  .labora-delta-check {
+    @apply flex items-center space-x-2 p-3 bg-yellow-50 border-l-4 border-yellow-500 rounded;
+  }
+  
+  .labora-trend-indicator {
+    @apply inline-flex items-center space-x-1 text-sm;
+  }
+  
+  .labora-trend-up {
+    @apply text-red-600;
+  }
+  
+  .labora-trend-down {
+    @apply text-blue-600;
+  }
+  
+  .labora-trend-stable {
+    @apply text-green-600;
+  }
+  
+  /* Graphical Result Display */
+  .labora-result-graph {
+    @apply relative h-32 bg-gradient-to-r from-blue-50 to-white rounded-lg p-4;
+  }
+  
+  .labora-reference-marker {
+    @apply absolute h-full border-l-2 border-dashed;
+  }
+  
+  .labora-reference-marker.low {
+    @apply border-blue-400;
+  }
+  
+  .labora-reference-marker.high {
+    @apply border-red-400;
+  }
+  
+  /* === ENHANCED SPECIMEN COMPONENTS === */
+  .labora-specimen-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+  }
+  
+  .labora-specimen-card-enhanced {
+    @apply relative bg-white border-2 rounded-xl p-4 transition-all duration-200 hover:shadow-lg;
+  }
+  
+  .labora-specimen-type-indicator {
+    @apply absolute top-2 right-2 w-3 h-3 rounded-full;
+  }
+  
+  .specimen-blood .labora-specimen-type-indicator {
+    @apply bg-red-500;
+  }
+  
+  .specimen-urine .labora-specimen-type-indicator {
+    @apply bg-yellow-500;
+  }
+  
+  .specimen-serum .labora-specimen-type-indicator {
+    @apply bg-orange-500;
+  }
+  
+  /* Temperature-sensitive specimen indicator */
+  .labora-temp-sensitive {
+    @apply border-blue-500 bg-blue-50;
+  }
+  
+  .labora-temp-indicator {
+    @apply flex items-center space-x-2 text-xs text-blue-700 mt-2;
+  }
+  
+  /* === ENHANCED WORKFLOW STATUS COMPONENTS === */
+  .labora-workflow-stepper {
+    @apply flex items-center justify-between w-full mb-8;
+  }
+  
+  .labora-workflow-step {
+    @apply flex flex-col items-center flex-1 relative;
+  }
+  
+  .labora-workflow-connector {
+    @apply absolute top-5 left-1/2 w-full h-0.5 -z-10;
+  }
+  
+  .labora-workflow-step:last-child .labora-workflow-connector {
+    @apply hidden;
+  }
+  
+  .labora-workflow-connector.pending {
+    @apply bg-gray-200;
+  }
+  
+  .labora-workflow-connector.completed {
+    @apply bg-green-500;
+  }
+  
+  .labora-workflow-connector.active {
+    @apply bg-blue-500;
+  }
+  
+  .labora-step-circle {
+    @apply w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 bg-white transition-all duration-300 z-10;
+  }
+  
+  .labora-step-circle.pending {
+    @apply border-gray-300 text-gray-400;
+  }
+  
+  .labora-step-circle.active {
+    @apply border-blue-500 bg-blue-500 text-white shadow-lg scale-110 animate-pulse;
+  }
+  
+  .labora-step-circle.completed {
+    @apply border-green-500 bg-green-500 text-white shadow-md;
+  }
+  
+  .labora-step-label {
+    @apply mt-2 text-xs font-medium text-center;
+  }
+  
+  .labora-step-label.pending {
+    @apply text-gray-400;
+  }
+  
+  .labora-step-label.active {
+    @apply text-blue-600 font-semibold;
+  }
+  
+  .labora-step-label.completed {
+    @apply text-green-600;
+  }
+  
+  .labora-step-timestamp {
+    @apply text-xs text-gray-500 mt-1;
+  }
+  
+  /* Progress Bar Alternative */
+  .labora-progress-bar {
+    @apply w-full h-2 bg-gray-200 rounded-full overflow-hidden;
+  }
+  
+  .labora-progress-fill {
+    @apply h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500 ease-out;
+  }
+  
+  .labora-progress-fill.critical {
+    @apply from-red-500 to-red-600;
+  }
+  
+  /* === ENHANCED DASHBOARD COMPONENTS === */
+  .labora-metric-card {
+    @apply bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-all;
+  }
+  
+  .labora-metric-header {
+    @apply flex items-center justify-between mb-4;
+  }
+  
+  .labora-metric-icon {
+    @apply w-12 h-12 rounded-lg flex items-center justify-center;
+  }
+  
+  .labora-metric-value {
+    @apply text-4xl font-bold tracking-tight;
+  }
+  
+  .labora-metric-label {
+    @apply text-sm text-gray-600 font-medium;
+  }
+  
+  .labora-metric-change {
+    @apply flex items-center space-x-1 text-sm mt-2;
+  }
+  
+  .labora-metric-change.positive {
+    @apply text-green-600;
+  }
+  
+  .labora-metric-change.negative {
+    @apply text-red-600;
+  }
+  
+  /* === PATIENT TIMELINE COMPONENTS === */
+  .labora-patient-timeline {
+    @apply space-y-4;
+  }
+  
+  .labora-timeline-event {
+    @apply relative pl-8 pb-4 border-l-2 border-gray-200;
+  }
+  
+  .labora-timeline-event:last-child {
+    @apply border-l-transparent pb-0;
+  }
+  
+  .labora-timeline-dot {
+    @apply absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-white border-2;
+  }
+  
+  .labora-timeline-dot.test-ordered {
+    @apply border-blue-500 bg-blue-500;
+  }
+  
+  .labora-timeline-dot.specimen-collected {
+    @apply border-purple-500 bg-purple-500;
+  }
+  
+  .labora-timeline-dot.result-ready {
+    @apply border-green-500 bg-green-500;
+  }
+  
+  /* === CRITICAL VALUE NOTIFICATION === */
+  .labora-critical-banner {
+    @apply fixed top-0 left-0 right-0 bg-red-600 text-white px-6 py-4 z-50 shadow-2xl;
+  }
+  
+  .labora-critical-banner-content {
+    @apply flex items-center justify-between max-w-7xl mx-auto;
+  }
+  
+  .labora-panic-indicator {
+    @apply inline-flex items-center px-3 py-1 bg-red-700 rounded-full text-xs font-bold animate-pulse;
+  }
+  
+  /* === INTELLIGENT SEARCH COMPONENTS === */
+  .labora-search-advanced {
+    @apply relative;
+  }
+  
+  .labora-search-filters {
+    @apply absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-xl mt-2 p-4 z-50;
+  }
+  
+  .labora-search-filter-group {
+    @apply space-y-2 mb-4;
+  }
+  
+  .labora-search-result-item {
+    @apply p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors border-l-4 border-transparent;
+  }
+  
+  .labora-search-result-item:hover {
+    @apply border-l-blue-500;
+  }
+  
+  .labora-search-highlight {
+    @apply bg-yellow-200 text-gray-900 font-medium px-1;
+  }
+  
+  /* === TURNAROUND TIME COMPONENTS === */
+  .labora-tat-monitor {
+    @apply bg-white rounded-lg shadow-md p-4;
+  }
+  
+  .labora-tat-indicator {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .labora-tat-indicator.on-time {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .labora-tat-indicator.delayed {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .labora-tat-indicator.critical {
+    @apply bg-red-600 text-white animate-pulse;
+  }
+
+  /* === RESULT VISUALIZATION COMPONENTS === */
+  .labora-result-graph-container {
+    @apply relative bg-gradient-to-br from-blue-50 to-white rounded-xl p-6 border border-gray-200;
+  }
+  
+  .labora-result-trend-line {
+    @apply relative h-48 bg-white rounded-lg p-4 border border-gray-100;
+  }
+  
+  .labora-reference-range-visual {
+    @apply absolute inset-x-0 bg-green-50 border-y border-green-200;
+  }
+  
+  .labora-critical-range-high {
+    @apply absolute inset-x-0 top-0 bg-red-50 border-b border-red-200;
+  }
+  
+  .labora-critical-range-low {
+    @apply absolute inset-x-0 bottom-0 bg-red-50 border-t border-red-200;
+  }
+  
+  .labora-result-point {
+    @apply absolute w-3 h-3 rounded-full border-2 border-white shadow-md transition-all hover:scale-150;
+  }
+  
+  .labora-result-point.normal {
+    @apply bg-green-500;
+  }
+  
+  .labora-result-point.abnormal {
+    @apply bg-yellow-500;
+  }
+  
+  .labora-result-point.critical {
+    @apply bg-red-500 animate-pulse;
+  }
+  
+  .labora-delta-check-alert {
+    @apply flex items-center space-x-2 p-3 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg;
+  }
+  
+  /* Mini Sparkline Chart */
+  .labora-sparkline {
+    @apply inline-block h-8 w-24;
+  }
+
+  /* === LAB WORKBENCH BATCH PROCESSING === */
+  .labora-workbench-container {
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-6;
+  }
+  
+  .labora-specimen-queue {
+    @apply lg:col-span-1 bg-white rounded-xl border border-gray-200 p-4 max-h-screen overflow-y-auto;
+  }
+  
+  .labora-batch-processor {
+    @apply lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6;
+  }
+  
+  .labora-queue-item {
+    @apply p-3 mb-2 border border-gray-200 rounded-lg cursor-pointer transition-all hover:border-blue-500 hover:shadow-md;
+  }
+  
+  .labora-queue-item.selected {
+    @apply border-blue-500 bg-blue-50 ring-2 ring-blue-200;
+  }
+  
+  .labora-queue-item.processing {
+    @apply border-yellow-500 bg-yellow-50;
+  }
+  
+  .labora-queue-item.completed {
+    @apply border-green-500 bg-green-50 opacity-60;
+  }
+  
+  .labora-batch-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+  
+  .labora-result-input-group {
+    @apply border border-gray-200 rounded-lg p-4 space-y-3 transition-all focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200;
+  }
+  
+  .labora-result-input-group.error {
+    @apply border-red-500 bg-red-50;
+  }
+  
+  .labora-quick-input {
+    @apply w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-200 transition-all;
+  }
+  
+  .labora-quick-input.critical-value {
+    @apply border-red-500 bg-red-50 ring-4 ring-red-200 animate-pulse;
+  }
+  
+  .labora-batch-actions {
+    @apply sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-between items-center space-x-3;
+  }
+  
+  .labora-batch-counter {
+    @apply text-sm font-medium text-gray-700;
+  }
+
+  /* === REAL-TIME MONITORING DASHBOARD === */
+  .labora-live-dashboard {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+  }
+  
+  .labora-live-metric {
+    @apply bg-white rounded-xl border border-gray-200 p-6 relative overflow-hidden transition-all hover:shadow-lg;
+  }
+  
+  .labora-live-metric.alert {
+    @apply border-red-500 bg-red-50 animate-pulse;
+  }
+  
+  .labora-live-indicator {
+    @apply absolute top-2 right-2 w-3 h-3 rounded-full bg-green-500 animate-pulse;
+  }
+  
+  .labora-live-indicator.warning {
+    @apply bg-yellow-500;
+  }
+  
+  .labora-live-indicator.error {
+    @apply bg-red-500;
+  }
+  
+  .labora-metric-big {
+    @apply text-4xl font-bold tracking-tight mb-2;
+  }
+  
+  .labora-alert-feed {
+    @apply bg-white rounded-xl border border-gray-200 p-4 max-h-96 overflow-y-auto;
+  }
+  
+  .labora-alert-item {
+    @apply flex items-start space-x-3 p-3 mb-2 rounded-lg transition-all hover:bg-gray-50;
+  }
+  
+  .labora-alert-item.critical {
+    @apply bg-red-50 border border-red-200;
+  }
+  
+  .labora-alert-item.warning {
+    @apply bg-yellow-50 border border-yellow-200;
+  }
+  
+  .labora-alert-dot {
+    @apply w-2 h-2 rounded-full mt-1.5 flex-shrink-0;
+  }
+  
+  .labora-alert-dot.critical {
+    @apply bg-red-500 animate-pulse;
+  }
+  
+  .labora-alert-dot.warning {
+    @apply bg-yellow-500;
+  }
+  
+  .labora-equipment-status-grid {
+    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3;
+  }
+  
+  .labora-equipment-card {
+    @apply bg-white border-2 rounded-lg p-4 text-center transition-all hover:shadow-md;
+  }
+  
+  .labora-equipment-card.online {
+    @apply border-green-500;
+  }
+  
+  .labora-equipment-card.offline {
+    @apply border-red-500 bg-red-50;
+  }
+  
+  .labora-equipment-card.maintenance {
+    @apply border-yellow-500 bg-yellow-50;
+  }
+
+  /* === MOBILE-FIRST SPECIMEN COLLECTION === */
+  .labora-mobile-scanner-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-90 z-50 flex flex-col;
+  }
+  
+  .labora-scanner-viewfinder {
+    @apply flex-1 flex items-center justify-center relative;
+  }
+  
+  .labora-scanner-frame {
+    @apply w-72 h-72 border-4 border-white rounded-2xl relative;
+  }
+  
+  .labora-scanner-corner {
+    @apply absolute w-8 h-8 border-white;
+  }
+  
+  .labora-scanner-corner.top-left {
+    @apply top-0 left-0 border-t-4 border-l-4;
+  }
+  
+  .labora-scanner-corner.top-right {
+    @apply top-0 right-0 border-t-4 border-r-4;
+  }
+  
+  .labora-scanner-corner.bottom-left {
+    @apply bottom-0 left-0 border-b-4 border-l-4;
+  }
+  
+  .labora-scanner-corner.bottom-right {
+    @apply bottom-0 right-0 border-b-4 border-r-4;
+  }
+  
+  .labora-scanner-line {
+    @apply absolute inset-x-0 h-0.5 bg-green-500;
+    animation: scan 2s linear infinite;
+  }
+  
+  .labora-scanner-result-popup {
+    @apply bg-white rounded-t-3xl p-6 shadow-2xl;
+  }
+  
+  .labora-mobile-capture-button {
+    @apply w-16 h-16 rounded-full bg-white border-4 border-blue-500 flex items-center justify-center shadow-lg active:scale-90 transition-transform;
+  }
+  
+  .labora-mobile-specimen-form {
+    @apply space-y-4 p-4;
+  }
+  
+  .labora-mobile-input {
+    @apply w-full px-4 py-4 text-base border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-200;
+  }
+  
+  .labora-mobile-button {
+    @apply w-full py-4 text-base font-medium rounded-xl transition-all active:scale-95;
+  }
+  
+  .labora-photo-preview {
+    @apply w-full h-48 object-cover rounded-lg border-2 border-gray-200;
+  }
+  
+  .labora-gps-indicator {
+    @apply flex items-center space-x-2 text-sm text-gray-600 bg-gray-100 rounded-lg p-2;
+  }
+
+  /* === ADVANCED QC LEVEY-JENNINGS CHART === */
+  .labora-qc-chart-wrapper {
+    @apply bg-white rounded-xl border border-gray-200 p-6;
+  }
+  
+  .labora-qc-chart-canvas {
+    @apply relative h-64 border border-gray-200 rounded-lg bg-gray-50;
+  }
+  
+  .labora-qc-control-line {
+    @apply absolute left-0 right-0 h-px;
+  }
+  
+  .labora-qc-control-line.mean {
+    @apply border-t-2 border-green-600;
+  }
+  
+  .labora-qc-control-line.sd1 {
+    @apply border-t border-dashed border-yellow-500;
+  }
+  
+  .labora-qc-control-line.sd2 {
+    @apply border-t border-dashed border-orange-500;
+  }
+  
+  .labora-qc-control-line.sd3 {
+    @apply border-t-2 border-red-500;
+  }
+  
+  .labora-qc-data-point {
+    @apply absolute w-3 h-3 rounded-full border-2 border-white shadow-md transition-all hover:scale-150 cursor-pointer;
+  }
+  
+  .labora-qc-data-point.in-control {
+    @apply bg-green-500;
+  }
+  
+  .labora-qc-data-point.warning {
+    @apply bg-yellow-500;
+  }
+  
+  .labora-qc-data-point.out-of-control {
+    @apply bg-red-500 animate-pulse ring-4 ring-red-200;
+  }
+  
+  .labora-qc-violation-marker {
+    @apply absolute -top-6 bg-red-600 text-white text-xs px-2 py-1 rounded font-bold;
+  }
+  
+  .labora-qc-rule-indicator {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .labora-qc-rule-indicator.westgard {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .labora-qc-legend {
+    @apply flex flex-wrap gap-4 mt-4 text-sm;
+  }
+  
+  .labora-qc-legend-item {
+    @apply flex items-center space-x-2;
+  }
+  
+  .labora-qc-stats-panel {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 mt-6;
+  }
+  
+  .labora-qc-stat-card {
+    @apply bg-gray-50 rounded-lg p-4 text-center;
+  }
+  
+  .labora-qc-stat-value {
+    @apply text-2xl font-bold text-gray-900;
+  }
+  
+  .labora-qc-stat-label {
+    @apply text-xs text-gray-600 mt-1;
+  }
+  
+  /* === EMPTY STATE COMPONENTS === */
+  .labora-empty-state {
+    @apply flex flex-col items-center justify-center py-12 text-center;
+  }
+  
+  .labora-empty-icon {
+    @apply w-24 h-24 text-gray-300 mb-4;
+  }
+  
+  .labora-empty-title {
+    @apply text-lg font-medium text-gray-900 mb-2;
+  }
+  
+  .labora-empty-description {
+    @apply text-sm text-gray-500 mb-6;
+  }
+  
+  /* === LOADING STATES === */
+  .labora-skeleton-card {
+    @apply bg-white rounded-xl p-6 border border-gray-200 animate-pulse;
+  }
+  
+  .labora-skeleton-line {
+    @apply h-4 bg-gray-200 rounded;
+  }
+  
+  .labora-skeleton-circle {
+    @apply w-12 h-12 bg-gray-200 rounded-full;
+  }
+  
+  /* === MICRO-INTERACTIONS === */
+  .labora-clickable {
+    @apply cursor-pointer transition-all duration-200 active:scale-95;
+  }
+  
+  .labora-hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .labora-pulse-once {
+    animation: pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  
+  /* === MINIMALIST MODERN STYLE ENHANCEMENTS === */
+  
+  /* Subtle glassmorphism untuk modern look */
+  .labora-glass {
+    @apply bg-white bg-opacity-80 backdrop-blur-lg border border-gray-200;
+  }
+
+  /* Neumorphism untuk buttons (optional) */
+  .labora-btn-neu {
+    @apply bg-gray-50 shadow-inner hover:shadow-md transition-shadow;
+  }
+
+  /* Clean data tables */
+  .labora-table-minimal {
+    @apply border-separate border-spacing-y-2;
+  }
+
+  .labora-table-minimal tbody tr {
+    @apply bg-white hover:bg-gray-50 transition-colors;
+  }
+
+  .labora-table-minimal tbody td {
+    @apply first:rounded-l-lg last:rounded-r-lg;
+  }
 }
 
 /* ==========================================================================
-   Dark Mode Support
+   Enhanced Medical Utilities
    ========================================================================== */
+@layer utilities {
+  /* Medical-specific utilities */
+  .text-critical {
+    @apply text-red-600 font-semibold;
+  }
+  
+  .bg-critical-subtle {
+    @apply bg-red-50 border border-red-200;
+  }
+  
+  .text-abnormal {
+    @apply text-yellow-600 font-medium;
+  }
+  
+  .text-normal {
+    @apply text-green-600;
+  }
+  
+  /* Touch-friendly for lab technicians with gloves */
+  .touch-target {
+    @apply min-h-12 min-w-12;
+  }
+  
+  /* High contrast for medical viewing */
+  .medical-contrast {
+    @apply contrast-125;
+  }
+  
+  /* Focus visible for keyboard navigation */
+  .focus-medical {
+    @apply focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 focus:outline-none;
+  }
+  
+  /* === ORIGINAL UTILITIES === */
 @media (prefers-color-scheme: dark) {
   .dark {
     @apply bg-gray-900 text-gray-100;
@@ -441,4 +1681,5 @@
 /* Notification positioning */
 #toast-container {
   @apply fixed top-4 right-4 z-50 space-y-2;
+}
 }

@@ -1,0 +1,179 @@
+<!-- Labora Header Component -->
+<!-- Menggunakan custom Labora classes untuk konsistensi -->
+<header class="labora-header">
+    <nav class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo and Brand -->
+            <div class="flex items-center">
+                <button type="button" 
+                        class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-labora-500"
+                        id="mobile-menu-button"
+                        aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                
+                <div class="flex-shrink-0 flex items-center ml-4 lg:ml-0">
+                    <img class="h-8 w-auto" src="/assets/images/labora-logo.png" alt="Labora">
+                    <div class="hidden sm:block ml-3">
+                        <h1 class="text-xl font-bold text-gray-900 dark:text-white">Labora</h1>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Clinical Lab System</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:block flex-1 max-w-lg mx-8">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input type="text" 
+                           class="labora-input pl-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                           placeholder="Cari pasien, spesimen, atau test..." 
+                           id="global-search">
+                </div>
+            </div>
+
+            <!-- Right Navigation -->
+            <div class="flex items-center space-x-4">
+                <!-- Quick Actions -->
+                <div class="hidden lg:flex items-center space-x-1">
+                    <button type="button" 
+                            class="labora-btn labora-btn-secondary p-2"
+                            title="Tambah Test Baru">
+                        <i class="fas fa-plus text-lg"></i>
+                    </button>
+                    <button type="button" 
+                            class="labora-btn labora-btn-secondary p-2"
+                            title="Barcode Scanner">
+                        <i class="fas fa-qrcode text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Dark Mode Toggle will be added by JavaScript -->
+
+                <!-- Notifications -->
+                <div class="relative">
+                    <button type="button" 
+                            class="p-2 text-gray-400 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-labora-500 rounded-lg"
+                            id="notifications-button"
+                            data-dropdown-toggle="notifications-dropdown"
+                            aria-expanded="false">
+                        <span class="sr-only">View notifications</span>
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white dark:ring-gray-800"></span>
+                    </button>
+
+                    <!-- Notifications Dropdown -->
+                    <div class="hidden z-50 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700" 
+                         id="notifications-dropdown">
+                        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                            <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Notifikasi</h3>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto">
+                            <a href="#" class="flex px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-400 text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <p class="text-sm text-gray-900 dark:text-white">Hasil Critical Value</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Pasien: John Doe - Glucose: 400 mg/dL</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">5 menit yang lalu</p>
+                                </div>
+                            </a>
+                            <a href="#" class="flex px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-vial text-blue-600 dark:text-blue-400 text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <p class="text-sm text-gray-900 dark:text-white">Spesimen Baru</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">5 spesimen menunggu proses</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">10 menit yang lalu</p>
+                                </div>
+                            </a>
+                            <a href="#" class="flex px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-green-600 dark:text-green-400 text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <p class="text-sm text-gray-900 dark:text-white">QC Complete</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Quality Control hari ini selesai</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">1 jam yang lalu</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                            <a href="/notifications" class="text-sm text-labora-600 hover:text-labora-700 dark:text-labora-400 dark:hover:text-labora-300">
+                                Lihat semua notifikasi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Profile -->
+                <div class="relative">
+                    <button type="button" 
+                            class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-labora-500"
+                            id="user-menu-button"
+                            data-dropdown-toggle="user-dropdown"
+                            aria-expanded="false">
+                        <span class="sr-only">Open user menu</span>
+                        <div class="h-8 w-8 rounded-full bg-labora-500 flex items-center justify-center text-white font-medium">
+                            {{#if user.avatar}}
+                                <img class="h-8 w-8 rounded-full" src="{{user.avatar}}" alt="{{user.name}}">
+                            {{else}}
+                                {{substring user.name 0 1}}
+                            {{/if}}
+                        </div>
+                        <div class="hidden lg:block ml-2 text-left">
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{user.name}}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{user.role}}</p>
+                        </div>
+                    </button>
+
+                    <!-- User Dropdown -->
+                    <div class="hidden z-50 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700" 
+                         id="user-dropdown">
+                        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{user.name}}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{user.email}}</p>
+                        </div>
+                        <ul class="py-1">
+                            <li>
+                                <a href="/profile" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <i class="fas fa-user w-4 mr-3"></i>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/settings" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <i class="fas fa-cog w-4 mr-3"></i>
+                                    Pengaturan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/help" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <i class="fas fa-question-circle w-4 mr-3"></i>
+                                    Bantuan
+                                </a>
+                            </li>
+                            <li class="border-t border-gray-200 dark:border-gray-700">
+                                <a href="/logout" class="flex items-center px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900">
+                                    <i class="fas fa-sign-out-alt w-4 mr-3"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
