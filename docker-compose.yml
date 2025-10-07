@@ -1,0 +1,109 @@
+# Docker Compose for Development Environment - Labora Clinical Lab
+# Untuk menjalankan: docker-compose up -d
+# Untuk melihat logs: docker-compose logs -f
+# Untuk stop: docker-compose down
+
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Database utama untuk aplikasi
+  postgres:
+    image: postgres:15-alpine
+    container_name: labora-postgres
+    environment:
+      POSTGRES_DB: labora_db
+      POSTGRES_USER: labora_user
+      POSTGRES_PASSWORD: labora123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "5432:5432"  # Port 5432 di komputer Anda akan terhubung ke PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro  # Otomatis load schema database
+    networks:
+      - labora-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U labora_user -d labora_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache (Optional)
+  redis:
+    image: redis:7-alpine
+    container_name: labora-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - labora-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # NestJS Application (Development)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: labora-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: labora_db
+      DATABASE_USER: labora_user
+      DATABASE_PASSWORD: labora123
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    networks:
+      - labora-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx (Production proxy)
+  nginx:
+    image: nginx:alpine
+    container_name: labora-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-available:/etc/nginx/sites-available:ro
+      - ./uploads:/var/www/uploads:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - labora-network
+    depends_on:
+      - app
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  labora-network:
+    driver: bridge

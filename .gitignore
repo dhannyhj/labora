@@ -45,3 +45,25 @@ Thumbs.db
 .env.development
 .env.template
 .env.production
+
+# Application logs and uploads
+logs/
+uploads/
+temp/
+
+# Database dumps
+*.sql.dump
+*.backup
+
+# PM2 files
+ecosystem.config.js.local
+.pm2/
+
+# SSL certificates
+*.key
+*.crt
+*.pem
+
+# Backup files
+*.bak
+*.backup

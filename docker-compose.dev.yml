@@ -1,0 +1,40 @@
+# Docker Development Environment dengan App Container
+# File: docker-compose.dev.yml
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+version: '3.8'
+
+services:
+  # Override app service untuk development
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: labora-app-dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"  # Debug port
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: labora_db
+      DATABASE_USER: labora_user
+      DATABASE_PASSWORD: labora123
+    volumes:
+      - ./src:/app/src:ro          # Source code (read-only untuk security)
+      - ./package.json:/app/package.json:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./uploads:/app/uploads     # Uploads directory
+      - ./logs:/app/logs          # Logs directory
+      - node_modules:/app/node_modules  # Named volume untuk performance
+    command: npm run start:debug
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - labora-network
+    restart: unless-stopped
+
+volumes:
+  node_modules:  # Named volume untuk better performance
