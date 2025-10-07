@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { getDatabaseConfig } from './database/database.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,8 +26,10 @@ import { getDatabaseConfig } from './database/database.config';
       limit: 100, // 100 requests per minute
     }]),
     
+    // Authentication module
+    AuthModule,
+    
     // Feature modules will be added here
-    // AuthModule,
     // PatientsModule,
     // OrdersModule,
     // etc.

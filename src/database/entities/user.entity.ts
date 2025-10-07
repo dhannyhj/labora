@@ -1,75 +1,110 @@
-import { Entity, Column, Index } from 'typeorm';
+import { Entity, Column, Index, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { BaseEntity } from './base.entity';
-
-export enum UserRole {
-  ADMIN = 'admin',
-  LAB_MANAGER = 'lab_manager',
-  LAB_TECHNICIAN = 'lab_technician',
-  NURSE = 'nurse',
-  DOCTOR = 'doctor',
-  RECEPTIONIST = 'receptionist'
-}
-
-export enum UserStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  SUSPENDED = 'suspended'
-}
+import { Organization } from './organization.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Entity({ schema: 'lab', name: 'users' })
 @Index(['email'], { unique: true })
 @Index(['username'], { unique: true })
+@Index(['organizationId', 'role'])
 export class User extends BaseEntity {
-  @Column({ unique: true, length: 50 })
+  @Column({ 
+    length: 100,
+    unique: true,
+    comment: 'Unique username for login'
+  })
   username: string;
 
-  @Column({ unique: true, length: 100 })
+  @Column({ 
+    length: 255, 
+    unique: true,
+    nullable: true,
+    comment: 'Email address'
+  })
   email: string;
 
-  @Column({ length: 255 })
-  passwordHash: string;
+  @Column({
+    name: 'password_hash',
+    type: 'text',
+    nullable: true,
+    select: false,
+    comment: 'Hashed password'
+  })
+  password: string;
 
-  @Column({ length: 100 })
+  @Column({
+    name: 'full_name',
+    type: 'text',
+    nullable: true,
+    comment: 'Full name of the user'
+  })
   fullName: string;
 
-  @Column({ length: 20, nullable: true })
-  phone?: string;
+  @Column({ 
+    length: 50,
+    nullable: true,
+    comment: 'User role within organization'
+  })
+  role: string;
 
   @Column({
-    type: 'enum',
-    enum: UserRole,
-    default: UserRole.LAB_TECHNICIAN
+    name: 'organization_id',
+    type: 'uuid',
+    nullable: true,
+    comment: 'Organization this user belongs to'
   })
-  role: UserRole;
+  organizationId: string;
 
   @Column({
-    type: 'enum',
-    enum: UserStatus,
-    default: UserStatus.ACTIVE
+    name: 'is_active',
+    type: 'boolean',
+    default: true,
+    comment: 'Whether user account is active'
   })
-  status: UserStatus;
+  isActive: boolean;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  lastLoginAt?: Date;
+  @Column({ 
+    type: 'jsonb', 
+    nullable: true,
+    comment: 'Additional user metadata'
+  })
+  meta: any;
 
-  @Column({ type: 'inet', nullable: true })
-  lastLoginIp?: string;
+  @Column({
+    name: 'last_login_at',
+    type: 'timestamptz',
+    nullable: true,
+    comment: 'Last login timestamp'
+  })
+  lastLoginAt: Date;
 
-  @Column({ type: 'text', nullable: true })
-  avatar?: string;
+  @Column({
+    name: 'failed_login_attempts',
+    type: 'int',
+    default: 0,
+    comment: 'Number of failed login attempts'
+  })
+  failedLoginAttempts: number;
 
-  @Column({ type: 'jsonb', nullable: true })
-  preferences?: any;
+  @Column({
+    name: 'is_deleted',
+    type: 'boolean',
+    default: false,
+    comment: 'Soft delete flag'
+  })
+  isDeleted: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
-  permissions?: string[];
+  // Relationships
+  @ManyToOne(() => Organization, organization => organization.users, { eager: true })
+  @JoinColumn({ name: 'organization_id' })
+  organization: Organization;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  emailVerifiedAt?: Date;
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  resetPasswordToken?: string;
-
-  @Column({ type: 'timestamptz', nullable: true })
-  resetPasswordExpires?: Date;
+  // Lifecycle hooks
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password && !this.password.startsWith('$2')) {
+      this.password = await bcrypt.hash(this.password, 12);
+    }
+  }
 }

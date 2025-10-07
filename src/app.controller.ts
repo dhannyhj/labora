@@ -5,23 +5,29 @@ import { ResponseUtil } from './common/utils';
 export class AppController {
   @Get()
   getWelcome() {
-    return ResponseUtil.success({
-      name: 'Labora Clinical Lab System',
-      version: '1.0.0',
-      description: 'Sistem Manajemen Laboratorium Klinik Terpadu',
-      status: 'running'
-    }, 'Welcome to Labora Clinical Lab System');
+    return ResponseUtil.success(
+      'Welcome to Labora Clinical Lab System',
+      {
+        name: 'Labora Clinical Lab System',
+        version: '1.0.0',
+        description: 'Sistem Manajemen Laboratorium Klinik Terpadu',
+        status: 'running'
+      }
+    );
   }
 
   @Get('health')
   getHealth() {
-    return ResponseUtil.success({
-      status: 'healthy',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV,
-      version: '1.0.0'
-    }, 'System is healthy');
+    return ResponseUtil.success(
+      'System is healthy',
+      {
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        environment: process.env.NODE_ENV,
+        version: '1.0.0'
+      }
+    );
   }
 
   @Get('dashboard')

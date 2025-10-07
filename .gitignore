@@ -67,3 +67,18 @@ ecosystem.config.js.local
 # Backup files
 *.bak
 *.backup
+
+# SSH keys and credentials (security)
+ssh-key/*
+priv_key.ppk
+labora-2
+test-auth.sh
+*.pub
+
+# Test files and temporary scripts
+test-*.json
+test-*.js
+test-*.ps1
+audit-*.ps1
+setup-*.ps1
+*.backup.ts
