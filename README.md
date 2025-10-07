@@ -12,7 +12,7 @@ Labora adalah sistem manajemen laboratorium klinik comprehensive yang menggunaka
 
 - **Backend**: NestJS + TypeScript
 - **Database**: PostgreSQL 15+
-- **Frontend**: Bootstrap 5 + Handlebars
+- **Frontend**: TailwindCSS + Flowbite + Handlebars
 - **Process Manager**: PM2
 - **Web Server**: Nginx
 - **Deployment**: DigitalOcean VPS
@@ -358,7 +358,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## 🙏 Acknowledgments
 
 - [NestJS](https://nestjs.com/) - Progressive Node.js framework
-- [Bootstrap](https://getbootstrap.com/) - CSS framework
+- [TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Flowbite](https://flowbite.com/) - Component library for TailwindCSS
 - [PostgreSQL](https://postgresql.org/) - Database system
 - [PM2](https://pm2.keymetrics.io/) - Process manager
 
