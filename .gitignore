@@ -32,6 +32,9 @@ build/
 *.psd
 *.ai
 
+# Allow tracking PSD files placed in assets/design
+!assets/design/*.psd
+
 # Misc
 .DS_Store
 Thumbs.db
