@@ -35,8 +35,15 @@ npm start
 Notes
 - This repository currently stores documentation and SQL artifacts. The `src/` folder contains a very small NestJS bootstrap to get started.
 - Large binary assets (PDF/PSD) are configured via `.gitattributes` to use Git LFS; please install Git LFS locally if you plan to store large files.
+Note: Proyek ini dikembangkan secara individu oleh dhannyhj.
+
+Catatan singkat:
+- Repo ini dikembangkan sendiri (solo). Tidak ada contributor lain saat ini.
+- Git LFS sudah diaktifkan untuk file besar (PDF, PSD, PNG). Pastikan `git lfs` terpasang di mesin lokal.
 
 Next steps I can do for you
 - Expand the NestJS project with full module structure (auth, patients, orders, etc.)
 - Initialize Git LFS and migrate large files
 - Add CI workflow and basic tests
+
+Lihat `CONTRIBUTING.md` untuk instruksi singkat penggunaan Git LFS dan pengaturan lokal.
