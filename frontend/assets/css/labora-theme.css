@@ -1,442 +1,444 @@
 /* 
- * Labora Clinical Lab System - Main Theme
- * Consistent UI styling for all pages
- * Bootstrap 5 customizations and custom components
+ * Labora Clinical Lab System - TailwindCSS Theme
+ * Modern UI dengan TailwindCSS + Flowbite
+ * Responsive, accessible, dan highly customizable
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Inter font untuk modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* ==========================================================================
-   Custom CSS Properties (CSS Variables)
+   Custom Base Styles
    ========================================================================== */
-:root {
-  /* Primary Colors - Medical/Clinical Theme */
-  --labora-primary: #0d6efd;
-  --labora-primary-dark: #0a58ca;
-  --labora-primary-light: #6ea8fe;
+@layer base {
+  html {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
   
-  /* Secondary Colors */
-  --labora-secondary: #6c757d;
-  --labora-success: #198754;
-  --labora-danger: #dc3545;
-  --labora-warning: #ffc107;
-  --labora-info: #0dcaf0;
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
   
-  /* Medical/Lab Specific Colors */
-  --labora-lab-blue: #0077be;
-  --labora-lab-green: #28a745;
-  --labora-lab-red: #dc3545;
-  --labora-specimen-amber: #ff9800;
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
   
-  /* Layout */
-  --labora-sidebar-width: 280px;
-  --labora-header-height: 60px;
-  --labora-footer-height: 50px;
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
   
-  /* Shadows */
-  --labora-shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, .075);
-  --labora-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
-  --labora-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, .175);
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
   
-  /* Border Radius */
-  --labora-border-radius: 0.375rem;
-  --labora-border-radius-lg: 0.5rem;
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+}
+
+/* ==========================================================================
+   Custom Components
+   ========================================================================== */
+@layer components {
+  /* Layout Components */
+  .labora-header {
+    @apply bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40;
+    height: 64px;
+  }
   
-  /* Transitions */
-  --labora-transition: all 0.2s ease-in-out;
+  .labora-sidebar {
+    @apply bg-white border-r border-gray-200 flex flex-col;
+    width: 280px;
+    min-height: calc(100vh - 64px);
+  }
+  
+  .labora-main {
+    @apply flex-1 flex flex-col min-w-0;
+  }
+  
+  .labora-content {
+    @apply flex-1 p-6;
+  }
+  
+  .labora-footer {
+    @apply bg-white border-t border-gray-200 px-6 py-4 mt-auto;
+  }
+  
+  /* Card Components */
+  .labora-card {
+    @apply bg-white rounded-xl shadow-card border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-dropdown hover:-translate-y-0.5;
+  }
+  
+  .labora-card-header {
+    @apply px-6 py-4 border-b border-gray-200 bg-gray-50;
+  }
+  
+  .labora-card-body {
+    @apply p-6;
+  }
+  
+  .labora-card-simple {
+    @apply bg-white rounded-lg shadow-soft p-6 border border-gray-100;
+  }
+  
+  /* Button Components */
+  .labora-btn {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .labora-btn-primary {
+    @apply bg-labora-500 text-white hover:bg-labora-600 focus:ring-labora-500;
+  }
+  
+  .labora-btn-secondary {
+    @apply bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500;
+  }
+  
+  .labora-btn-success {
+    @apply bg-medical-success text-white hover:bg-green-600 focus:ring-green-500;
+  }
+  
+  .labora-btn-danger {
+    @apply bg-medical-danger text-white hover:bg-red-600 focus:ring-red-500;
+  }
+  
+  .labora-btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  
+  .labora-btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+  
+  /* Form Components */
+  .labora-input {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-labora-500 focus:border-labora-500 transition-colors duration-200;
+  }
+  
+  .labora-select {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-labora-500 focus:border-labora-500 transition-colors duration-200;
+  }
+  
+  .labora-textarea {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-labora-500 focus:border-labora-500 transition-colors duration-200 resize-vertical;
+  }
+  
+  .labora-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+  }
+  
+  .labora-error {
+    @apply text-sm text-red-600 mt-1;
+  }
+  
+  /* Navigation Components */
+  .labora-nav-item {
+    @apply flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 hover:text-labora-600 transition-all duration-200;
+  }
+  
+  .labora-nav-item.active {
+    @apply bg-labora-50 text-labora-700 border-r-2 border-labora-500;
+  }
+  
+  .labora-nav-icon {
+    @apply w-5 h-5 mr-3 text-gray-500;
+  }
+  
+  .labora-nav-item.active .labora-nav-icon {
+    @apply text-labora-500;
+  }
+  
+  /* Table Components */
+  .labora-table {
+    @apply w-full bg-white rounded-xl overflow-hidden shadow-card border border-gray-200;
+  }
+  
+  .labora-table-header {
+    @apply bg-gray-50 border-b border-gray-200;
+  }
+  
+  .labora-table th {
+    @apply px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider;
+  }
+  
+  .labora-table td {
+    @apply px-6 py-4 text-sm text-gray-900 border-b border-gray-100;
+  }
+  
+  .labora-table tbody tr:hover {
+    @apply bg-gray-50;
+  }
+  
+  /* Status Badge Components */
+  .labora-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .status-requested {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .status-collected {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .status-received {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .status-in-progress {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .status-completed {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .status-verified {
+    @apply bg-emerald-100 text-emerald-800;
+  }
+  
+  .status-cancelled {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  /* Medical/Lab Specific Components */
+  .specimen-container {
+    @apply border-l-4 border-lab-specimen pl-4;
+  }
+  
+  .test-result-card {
+    @apply border-l-4 border-lab-test;
+  }
+  
+  .critical-result {
+    @apply border-l-4 border-medical-danger bg-red-50;
+  }
+  
+  .normal-result {
+    @apply border-l-4 border-medical-success bg-green-50;
+  }
+  
+  /* Notification Components */
+  .labora-notification {
+    @apply fixed top-4 right-4 max-w-sm w-full bg-white rounded-lg shadow-dropdown border border-gray-200 overflow-hidden z-50 transform transition-transform duration-300;
+  }
+  
+  .labora-notification-success {
+    @apply border-l-4 border-medical-success;
+  }
+  
+  .labora-notification-error {
+    @apply border-l-4 border-medical-danger;
+  }
+  
+  .labora-notification-warning {
+    @apply border-l-4 border-medical-warning;
+  }
+  
+  .labora-notification-info {
+    @apply border-l-4 border-medical-info;
+  }
+  
+  /* Loading Components */
+  .labora-spinner {
+    @apply animate-spin rounded-full border-2 border-gray-200 border-t-labora-500;
+  }
+  
+  .labora-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+  
+  /* Modal Components */
+  .labora-modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+  }
+  
+  .labora-modal {
+    @apply bg-white rounded-xl shadow-xl max-w-lg w-full mx-4 overflow-hidden;
+  }
+  
+  .labora-modal-header {
+    @apply px-6 py-4 border-b border-gray-200;
+  }
+  
+  .labora-modal-body {
+    @apply px-6 py-4;
+  }
+  
+  .labora-modal-footer {
+    @apply px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end space-x-3;
+  }
 }
-
-/* ==========================================================================
-   Base Layout
-   ========================================================================== */
-body.labora-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.labora-container {
-  display: flex;
-  flex: 1;
-  min-height: calc(100vh - var(--labora-header-height) - var(--labora-footer-height));
-}
-
-/* ==========================================================================
-   Header Component
-   ========================================================================== */
-.labora-header {
-  height: var(--labora-header-height);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 1030;
-}
-
-.labora-header .navbar-brand {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.labora-header .navbar-brand img {
-  filter: brightness(0) invert(1);
-}
-
-/* Notification dropdown styling */
-.notification-dropdown {
-  min-width: 320px;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.notification-dropdown .dropdown-item {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f8f9fa;
-}
-
-.notification-dropdown .dropdown-item:hover {
-  background-color: #f8f9fa;
-}
-
-/* ==========================================================================
-   Sidebar Component
-   ========================================================================== */
-.labora-sidebar {
-  width: var(--labora-sidebar-width);
-  min-height: 100%;
-  position: relative;
-  z-index: 1020;
-  transition: var(--labora-transition);
-}
-
-.sidebar-header {
-  background-color: #ffffff;
-}
-
-.sidebar-nav {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.sidebar-nav .nav-link {
-  color: #495057;
-  padding: 0.75rem 1rem;
-  margin: 0.125rem 0.5rem;
-  border-radius: var(--labora-border-radius);
-  transition: var(--labora-transition);
-  display: flex;
-  align-items: center;
-}
-
-.sidebar-nav .nav-link:hover {
-  background-color: #e9ecef;
-  color: var(--labora-primary);
-}
-
-.sidebar-nav .nav-link.active {
-  background-color: var(--labora-primary);
-  color: white !important;
-}
-
-.sidebar-nav .nav-link i {
-  width: 20px;
-  text-align: center;
-}
-
-.sidebar-nav .nav-header {
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.sidebar-footer {
-  background-color: #ffffff;
-}
-
-.status-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-/* ==========================================================================
-   Main Content Area
-   ========================================================================== */
-.labora-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0; /* Prevents flex item from overflowing */
-}
-
-.labora-breadcrumb {
-  background-color: #ffffff;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.labora-content {
-  flex: 1;
-  padding: 1.5rem;
-}
-
-/* ==========================================================================
-   Footer Component
-   ========================================================================== */
-.labora-footer {
-  margin-top: auto;
-  min-height: var(--labora-footer-height);
-}
-
-/* ==========================================================================
-   Mobile Bottom Navigation
-   ========================================================================== */
-.mobile-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1020;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.mobile-bottom-nav .nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.5rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  font-size: 0.75rem;
-  transition: var(--labora-transition);
-}
-
-.mobile-bottom-nav .nav-item:hover,
-.mobile-bottom-nav .nav-item.active {
-  color: white;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.mobile-bottom-nav .nav-item i {
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
-}
-
-/* ==========================================================================
-   Card Components
-   ========================================================================== */
-.labora-card {
-  border: none;
-  border-radius: var(--labora-border-radius-lg);
-  box-shadow: var(--labora-shadow-sm);
-  transition: var(--labora-transition);
-}
-
-.labora-card:hover {
-  box-shadow: var(--labora-shadow);
-  transform: translateY(-1px);
-}
-
-.labora-card-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #dee2e6;
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   Form Components
-   ========================================================================== */
-.labora-form-control {
-  border-radius: var(--labora-border-radius);
-  border: 1px solid #ced4da;
-  transition: var(--labora-transition);
-}
-
-.labora-form-control:focus {
-  border-color: var(--labora-primary);
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
-}
-
-.labora-btn {
-  border-radius: var(--labora-border-radius);
-  font-weight: 500;
-  transition: var(--labora-transition);
-}
-
-.labora-btn-primary {
-  background-color: var(--labora-primary);
-  border-color: var(--labora-primary);
-}
-
-.labora-btn-primary:hover {
-  background-color: var(--labora-primary-dark);
-  border-color: var(--labora-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--labora-shadow);
-}
-
-/* ==========================================================================
-   Table Components
-   ========================================================================== */
-.labora-table {
-  background-color: white;
-  border-radius: var(--labora-border-radius-lg);
-  overflow: hidden;
-  box-shadow: var(--labora-shadow-sm);
-}
-
-.labora-table thead th {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #dee2e6;
-  font-weight: 600;
-  color: #495057;
-}
-
-.labora-table tbody tr:hover {
-  background-color: #f8f9fa;
-}
-
-/* ==========================================================================
-   Status Badges
-   ========================================================================== */
-.labora-status-badge {
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.375rem 0.75rem;
-  border-radius: 50px;
-}
-
-.status-requested { background-color: #e7f3ff; color: #0066cc; }
-.status-collected { background-color: #fff3cd; color: #856404; }
-.status-received { background-color: #d4edda; color: #155724; }
-.status-in-progress { background-color: #cce5ff; color: #004085; }
-.status-completed { background-color: #d1ecf1; color: #0c5460; }
-.status-verified { background-color: #d4edda; color: #155724; }
-.status-cancelled { background-color: #f8d7da; color: #721c24; }
-
-/* ==========================================================================
-   Medical/Lab Specific Components
-   ========================================================================== */
-.specimen-container {
-  border-left: 4px solid var(--labora-specimen-amber);
-  padding-left: 1rem;
-}
-
-.test-result-card {
-  border-left: 4px solid var(--labora-lab-blue);
-}
-
-.critical-result {
-  border-left-color: var(--labora-danger) !important;
-  background-color: #ffeaea;
-}
-
-.normal-result {
-  border-left-color: var(--labora-success) !important;
-}
-
-/* ==========================================================================
-   Utilities
-   ========================================================================== */
-.labora-shadow-sm { box-shadow: var(--labora-shadow-sm); }
-.labora-shadow { box-shadow: var(--labora-shadow); }
-.labora-shadow-lg { box-shadow: var(--labora-shadow-lg); }
-
-.labora-border-radius { border-radius: var(--labora-border-radius); }
-.labora-border-radius-lg { border-radius: var(--labora-border-radius-lg); }
-
-.labora-transition { transition: var(--labora-transition); }
 
 /* ==========================================================================
    Responsive Design
    ========================================================================== */
-
-/* Tablet and below */
-@media (max-width: 991.98px) {
-  .labora-sidebar {
-    position: fixed;
-    top: var(--labora-header-height);
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - var(--labora-header-height));
-    z-index: 1040;
-    background-color: white;
-    transition: left 0.3s ease-in-out;
-  }
-  
-  .labora-sidebar.show {
-    left: 0;
-  }
-  
-  .labora-main {
-    width: 100%;
-    margin-left: 0;
-  }
-  
-  .labora-content {
-    padding: 1rem;
-    margin-bottom: 60px; /* Space for mobile bottom nav */
-  }
-  
-  .labora-breadcrumb {
-    padding: 0.5rem 1rem;
-  }
-}
-
-/* Mobile */
-@media (max-width: 575.98px) {
-  .labora-content {
-    padding: 0.75rem;
-  }
-  
-  .labora-header .navbar-brand span {
-    display: none;
-  }
-  
-  .notification-dropdown {
-    min-width: 280px;
-  }
-  
-  .mobile-bottom-nav .nav-item span {
-    font-size: 0.7rem;
-  }
-}
-
-/* ==========================================================================
-   Print Styles
-   ========================================================================== */
-@media print {
-  .labora-header,
-  .labora-sidebar,
-  .labora-footer,
+@layer utilities {
+  /* Mobile-first responsive utilities */
   .mobile-bottom-nav {
-    display: none !important;
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 lg:hidden;
   }
   
-  .labora-main {
-    width: 100% !important;
-    margin: 0 !important;
+  .mobile-nav-item {
+    @apply flex flex-col items-center justify-center py-2 px-1 text-xs text-gray-600 hover:text-labora-600 transition-colors duration-200;
   }
   
-  .labora-content {
-    padding: 0 !important;
+  .mobile-nav-item.active {
+    @apply text-labora-600;
   }
   
-  .labora-card {
-    box-shadow: none !important;
-    border: 1px solid #dee2e6 !important;
+  .mobile-nav-icon {
+    @apply w-6 h-6 mb-1;
+  }
+  
+  /* Desktop sidebar utilities */
+  @screen lg {
+    .labora-sidebar {
+      @apply translate-x-0;
+    }
+    
+    .labora-sidebar.collapsed {
+      width: 80px;
+    }
+    
+    .labora-sidebar.collapsed .nav-text {
+      @apply hidden;
+    }
+    
+    .labora-sidebar.collapsed .labora-nav-icon {
+      @apply mr-0;
+    }
+  }
+  
+  /* Print utilities */
+  @media print {
+    .no-print {
+      @apply hidden;
+    }
+    
+    .print-only {
+      @apply block;
+    }
+    
+    .labora-header,
+    .labora-sidebar,
+    .labora-footer,
+    .mobile-bottom-nav {
+      @apply hidden;
+    }
+    
+    .labora-main {
+      @apply w-full m-0;
+    }
+    
+    .labora-content {
+      @apply p-0;
+    }
   }
 }
 
 /* ==========================================================================
-   Dark Mode Support (Optional)
+   Dark Mode Support
    ========================================================================== */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --labora-bg-primary: #1a1a1a;
-    --labora-bg-secondary: #2d2d2d;
-    --labora-text-primary: #ffffff;
-    --labora-text-secondary: #cccccc;
+  .dark {
+    @apply bg-gray-900 text-gray-100;
   }
   
-  /* Dark mode styles can be added here if needed */
+  .dark .labora-header {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .labora-sidebar {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .labora-card {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .labora-input,
+  .dark .labora-select,
+  .dark .labora-textarea {
+    @apply bg-gray-700 border-gray-600 text-gray-100;
+  }
+  
+  .dark .labora-table {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .labora-table th {
+    @apply bg-gray-700 text-gray-300;
+  }
+  
+  .dark .labora-table td {
+    @apply text-gray-200 border-gray-700;
+  }
+}
+
+/* ==========================================================================
+   Animation Utilities
+   ========================================================================== */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* ==========================================================================
+   Custom Flowbite Overrides
+   ========================================================================== */
+.flowbite-override {
+  /* Custom overrides untuk Flowbite components */
+}
+
+/* Notification positioning */
+#toast-container {
+  @apply fixed top-4 right-4 z-50 space-y-2;
 }

@@ -1,295 +1,787 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} - Labora Clinical Lab</title>
-    <meta name="description" content="Sistem Manajemen Laboratorium Klinik Terpadu">
+    <title>{{title}} - Labora Clinical Lab System</title>
+    
+    <!-- TailwindCSS -->
+    <link rel="stylesheet" href="/assets/css/tailwind-output.css">
+    
+    <!-- Flowbite CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.css" rel="stylesheet" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/images/labora-logo.png">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
     
-    <!-- CSS Framework - Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Sistem Laboratorium Klinik Digital - Manajemen pasien, spesimen, dan hasil lab terintegrasi">
+    <meta name="keywords" content="laboratorium, klinik, sistem informasi, LIMS, healthcare">
+    <meta name="author" content="Labora Team">
     
-    <!-- Icons - Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Labora">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/labora-theme.css">
-    
-    <!-- Additional page-specific CSS -->
-    {{#if pageCSS}}
-    <link rel="stylesheet" href="/assets/css/{{pageCSS}}">
-    {{/if}}
+    <!-- Additional CSS -->
+    {{{extraCSS}}}
 </head>
-<body class="labora-body">
-    <!-- Header Component -->
-    <header class="labora-header bg-primary text-white shadow-sm sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-                <!-- Brand/Logo -->
-                <a class="navbar-brand d-flex align-items-center" href="/dashboard">
-                    <img src="/assets/images/labora-logo.png" alt="Labora" width="32" height="32" class="me-2">
-                    <span class="fw-bold">Labora</span>
-                </a>
+<body class="font-sans antialiased bg-gray-50 text-gray-900 min-h-full flex flex-col">
+    <!-- Skip Navigation Link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-labora-600 text-white px-4 py-2 rounded-md z-50">
+        Skip to main content
+    </a>
 
-                <!-- Mobile Menu Toggle -->
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <!-- Header -->
+    <header class="labora-header">
+        <nav class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo and Brand -->
+                <div class="flex items-center">
+                    <button type="button" 
+                            class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-labora-500"
+                            id="mobile-menu-button"
+                            aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <div class="flex-shrink-0 flex items-center ml-4 lg:ml-0">
+                        <img class="h-8 w-auto" src="/assets/images/labora-logo.png" alt="Labora">
+                        <div class="hidden sm:block ml-3">
+                            <h1 class="text-xl font-bold text-gray-900">Labora</h1>
+                            <p class="text-xs text-gray-500">Clinical Lab System</p>
+                        </div>
+                    </div>
+                </div>
 
-                <!-- Header Navigation -->
-                <div class="collapse navbar-collapse" id="headerNav">
-                    <ul class="navbar-nav ms-auto me-3">
-                        <!-- Notifications -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-bell"></i>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    <span id="notificationCount">3</span>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
-                                <li><h6 class="dropdown-header">Notifikasi</h6></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-test-tube text-warning me-2"></i>5 sampel siap diperiksa</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-check text-success me-2"></i>Laporan QC tersedia</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-exclamation-triangle text-danger me-2"></i>Reagent hampir habis</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-center" href="/notifications">Lihat Semua</a></li>
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:block flex-1 max-w-lg mx-8">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input type="text" 
+                               class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-labora-500 focus:border-labora-500"
+                               placeholder="Cari pasien, spesimen, atau test..." 
+                               id="global-search">
+                    </div>
+                </div>
+
+                <!-- Right Navigation -->
+                <div class="flex items-center space-x-4">
+                    <!-- Quick Actions -->
+                    <div class="hidden lg:flex items-center space-x-1">
+                        <button type="button" 
+                                class="p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-labora-500 rounded-lg"
+                                title="Tambah Test Baru">
+                            <i class="fas fa-plus text-lg"></i>
+                        </button>
+                        <button type="button" 
+                                class="p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-labora-500 rounded-lg"
+                                title="Barcode Scanner">
+                            <i class="fas fa-qrcode text-lg"></i>
+                        </button>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="relative">
+                        <button type="button" 
+                                class="p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-labora-500 rounded-lg"
+                                id="notifications-button"
+                                data-dropdown-toggle="notifications-dropdown"
+                                aria-expanded="false">
+                            <span class="sr-only">View notifications</span>
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white"></span>
+                        </button>
+
+                        <!-- Notifications Dropdown -->
+                        <div class="hidden z-50 w-80 bg-white rounded-lg shadow-lg border border-gray-200" 
+                             id="notifications-dropdown">
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <h3 class="text-sm font-semibold text-gray-900">Notifikasi</h3>
+                            </div>
+                            <div class="max-h-96 overflow-y-auto">
+                                <a href="#" class="flex px-4 py-3 hover:bg-gray-50 border-b border-gray-100">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-exclamation-triangle text-red-600 text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex-1">
+                                        <p class="text-sm text-gray-900">Hasil Critical Value</p>
+                                        <p class="text-xs text-gray-500">Pasien: John Doe - Glucose: 400 mg/dL</p>
+                                        <p class="text-xs text-gray-400 mt-1">5 menit yang lalu</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="flex px-4 py-3 hover:bg-gray-50 border-b border-gray-100">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-vial text-blue-600 text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex-1">
+                                        <p class="text-sm text-gray-900">Spesimen Baru</p>
+                                        <p class="text-xs text-gray-500">5 spesimen menunggu proses</p>
+                                        <p class="text-xs text-gray-400 mt-1">10 menit yang lalu</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="flex px-4 py-3 hover:bg-gray-50">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-check text-green-600 text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex-1">
+                                        <p class="text-sm text-gray-900">QC Complete</p>
+                                        <p class="text-xs text-gray-500">Quality Control hari ini selesai</p>
+                                        <p class="text-xs text-gray-400 mt-1">1 jam yang lalu</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="px-4 py-3 border-t border-gray-200">
+                                <a href="/notifications" class="text-sm text-labora-600 hover:text-labora-700">
+                                    Lihat semua notifikasi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Profile -->
+                    <div class="relative">
+                        <button type="button" 
+                                class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-labora-500"
+                                id="user-menu-button"
+                                data-dropdown-toggle="user-dropdown"
+                                aria-expanded="false">
+                            <span class="sr-only">Open user menu</span>
+                            <div class="h-8 w-8 rounded-full bg-labora-500 flex items-center justify-center text-white font-medium">
+                                {{#if user.avatar}}
+                                    <img class="h-8 w-8 rounded-full" src="{{user.avatar}}" alt="{{user.name}}">
+                                {{else}}
+                                    {{substring user.name 0 1}}
+                                {{/if}}
+                            </div>
+                            <div class="hidden lg:block ml-2 text-left">
+                                <p class="text-sm font-medium text-gray-900">{{user.name}}</p>
+                                <p class="text-xs text-gray-500">{{user.role}}</p>
+                            </div>
+                        </button>
+
+                        <!-- User Dropdown -->
+                        <div class="hidden z-50 w-48 bg-white rounded-lg shadow-lg border border-gray-200" 
+                             id="user-dropdown">
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <p class="text-sm font-medium text-gray-900">{{user.name}}</p>
+                                <p class="text-xs text-gray-500">{{user.email}}</p>
+                            </div>
+                            <ul class="py-1">
+                                <li>
+                                    <a href="/profile" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                        <i class="fas fa-user w-4 mr-3"></i>
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/settings" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                        <i class="fas fa-cog w-4 mr-3"></i>
+                                        Pengaturan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/help" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                        <i class="fas fa-question-circle w-4 mr-3"></i>
+                                        Bantuan
+                                    </a>
+                                </li>
+                                <li class="border-t border-gray-200">
+                                    <a href="/logout" class="flex items-center px-4 py-2 text-sm text-red-700 hover:bg-red-50">
+                                        <i class="fas fa-sign-out-alt w-4 mr-3"></i>
+                                        Logout
+                                    </a>
+                                </li>
                             </ul>
-                        </li>
-
-                        <!-- Quick Actions -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-plus-circle"></i> Tambah
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/orders/new"><i class="bi bi-file-plus me-2"></i>Order Baru</a></li>
-                                <li><a class="dropdown-item" href="/patients/new"><i class="bi bi-person-plus me-2"></i>Pasien Baru</a></li>
-                                <li><a class="dropdown-item" href="/specimens/new"><i class="bi bi-droplet me-2"></i>Sample Baru</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- User Menu -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-                                <img src="/assets/images/default-avatar.png" alt="User" width="24" height="24" class="rounded-circle me-1">
-                                <span>{{user.name}}</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/profile"><i class="bi bi-person me-2"></i>Profil</a></li>
-                                <li><a class="dropdown-item" href="/settings"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/help"><i class="bi bi-question-circle me-2"></i>Bantuan</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="labora-container">
-        <!-- Sidebar Component -->
-        <aside class="labora-sidebar bg-light border-end">
-            <div class="sidebar-header p-3 border-bottom">
-                <h6 class="text-muted mb-0">Menu Utama</h6>
+    <!-- Main Container -->
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Desktop Sidebar -->
+        <aside class="labora-sidebar hidden lg:flex" id="desktop-sidebar">
+            <!-- Sidebar Header -->
+            <div class="p-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-900">Menu</h2>
+                    <button type="button" 
+                            class="p-1 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                            id="sidebar-toggle"
+                            title="Toggle Sidebar">
+                        <i class="fas fa-chevron-left text-sm"></i>
+                    </button>
+                </div>
             </div>
 
-            <nav class="sidebar-nav">
-                <ul class="nav flex-column">
-                    <!-- Dashboard -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'dashboard'}}active{{/ifEquals}}" href="/dashboard">
-                            <i class="bi bi-speedometer2 me-2"></i>
-                            Dashboard
-                        </a>
-                    </li>
+            <!-- Navigation Menu -->
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                <!-- Dashboard Section -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Dashboard
+                    </h3>
+                    <a href="/" class="labora-nav-item {{#ifEquals currentPage 'dashboard'}}active{{/ifEquals}}">
+                        <i class="fas fa-chart-pie labora-nav-icon"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                    <a href="/analytics" class="labora-nav-item {{#ifEquals currentPage 'analytics'}}active{{/ifEquals}}">
+                        <i class="fas fa-chart-line labora-nav-icon"></i>
+                        <span class="nav-text">Analytics</span>
+                    </a>
+                </div>
 
-                    <!-- Order Management -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'orders'}}active{{/ifEquals}}" href="/orders">
-                            <i class="bi bi-file-earmark-text me-2"></i>
-                            Manajemen Order
-                        </a>
-                    </li>
+                <!-- Patient Management -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Manajemen Pasien
+                    </h3>
+                    <a href="/patients" class="labora-nav-item {{#ifEquals currentPage 'patients'}}active{{/ifEquals}}">
+                        <i class="fas fa-user-friends labora-nav-icon"></i>
+                        <span class="nav-text">Data Pasien</span>
+                    </a>
+                    <a href="/appointments" class="labora-nav-item {{#ifEquals currentPage 'appointments'}}active{{/ifEquals}}">
+                        <i class="fas fa-calendar-check labora-nav-icon"></i>
+                        <span class="nav-text">Appointment</span>
+                    </a>
+                </div>
 
-                    <!-- Patient Management -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'patients'}}active{{/ifEquals}}" href="/patients">
-                            <i class="bi bi-people me-2"></i>
-                            Data Pasien
-                        </a>
-                    </li>
+                <!-- Laboratory Operations -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Operasional Lab
+                    </h3>
+                    <a href="/tests" class="labora-nav-item {{#ifEquals currentPage 'tests'}}active{{/ifEquals}}">
+                        <i class="fas fa-flask labora-nav-icon"></i>
+                        <span class="nav-text">Test Requests</span>
+                    </a>
+                    <a href="/specimens" class="labora-nav-item {{#ifEquals currentPage 'specimens'}}active{{/ifEquals}}">
+                        <i class="fas fa-vial labora-nav-icon"></i>
+                        <span class="nav-text">Spesimen</span>
+                    </a>
+                    <a href="/results" class="labora-nav-item {{#ifEquals currentPage 'results'}}active{{/ifEquals}}">
+                        <i class="fas fa-clipboard-list labora-nav-icon"></i>
+                        <span class="nav-text">Hasil Lab</span>
+                    </a>
+                    <a href="/reports" class="labora-nav-item {{#ifEquals currentPage 'reports'}}active{{/ifEquals}}">
+                        <i class="fas fa-file-medical-alt labora-nav-icon"></i>
+                        <span class="nav-text">Reports</span>
+                    </a>
+                </div>
 
-                    <!-- Specimen Management -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'specimens'}}active{{/ifEquals}}" href="/specimens">
-                            <i class="bi bi-droplet me-2"></i>
-                            Manajemen Sampel
-                        </a>
-                    </li>
+                <!-- Quality Control -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Quality Control
+                    </h3>
+                    <a href="/qc" class="labora-nav-item {{#ifEquals currentPage 'qc'}}active{{/ifEquals}}">
+                        <i class="fas fa-shield-alt labora-nav-icon"></i>
+                        <span class="nav-text">QC Data</span>
+                    </a>
+                    <a href="/calibrations" class="labora-nav-item {{#ifEquals currentPage 'calibrations'}}active{{/ifEquals}}">
+                        <i class="fas fa-cogs labora-nav-icon"></i>
+                        <span class="nav-text">Kalibrasi</span>
+                    </a>
+                </div>
 
-                    <!-- Test Management -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'tests'}}active{{/ifEquals}}" href="/tests">
-                            <i class="bi bi-test-tube me-2"></i>
-                            Pemeriksaan Lab
-                        </a>
-                    </li>
+                <!-- Inventory -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Inventory
+                    </h3>
+                    <a href="/reagents" class="labora-nav-item {{#ifEquals currentPage 'reagents'}}active{{/ifEquals}}">
+                        <i class="fas fa-prescription-bottle labora-nav-icon"></i>
+                        <span class="nav-text">Reagents</span>
+                    </a>
+                    <a href="/equipment" class="labora-nav-item {{#ifEquals currentPage 'equipment'}}active{{/ifEquals}}">
+                        <i class="fas fa-microscope labora-nav-icon"></i>
+                        <span class="nav-text">Equipment</span>
+                    </a>
+                </div>
 
-                    <!-- Results -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'results'}}active{{/ifEquals}}" href="/results">
-                            <i class="bi bi-file-earmark-check me-2"></i>
-                            Hasil Pemeriksaan
-                        </a>
-                    </li>
-
-                    <!-- Reports -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'reports'}}active{{/ifEquals}}" href="/reports">
-                            <i class="bi bi-graph-up me-2"></i>
-                            Laporan
-                        </a>
-                    </li>
-
-                    <!-- Separator -->
-                    <li><hr class="dropdown-divider mx-3"></li>
-
-                    <!-- Inventory -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'inventory'}}active{{/ifEquals}}" href="/inventory">
-                            <i class="bi bi-box me-2"></i>
-                            Inventori
-                        </a>
-                    </li>
-
-                    <!-- Quality Control -->
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'qc'}}active{{/ifEquals}}" href="/quality-control">
-                            <i class="bi bi-shield-check me-2"></i>
-                            Quality Control
-                        </a>
-                    </li>
-
-                    <!-- Administration -->
-                    {{#if user.isAdmin}}
-                    <li><hr class="dropdown-divider mx-3"></li>
-                    <li class="nav-item">
-                        <h6 class="nav-header text-muted px-3 py-2 small">ADMINISTRASI</h6>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'users'}}active{{/ifEquals}}" href="/admin/users">
-                            <i class="bi bi-person-gear me-2"></i>
-                            Pengguna
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{#ifEquals currentPage 'settings'}}active{{/ifEquals}}" href="/admin/settings">
-                            <i class="bi bi-gear me-2"></i>
-                            Pengaturan Sistem
-                        </a>
-                    </li>
-                    {{/if}}
-                </ul>
+                <!-- Administration -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Administrasi
+                    </h3>
+                    <a href="/users" class="labora-nav-item {{#ifEquals currentPage 'users'}}active{{/ifEquals}}">
+                        <i class="fas fa-users labora-nav-icon"></i>
+                        <span class="nav-text">Pengguna</span>
+                    </a>
+                    <a href="/settings" class="labora-nav-item {{#ifEquals currentPage 'settings'}}active{{/ifEquals}}">
+                        <i class="fas fa-cog labora-nav-icon"></i>
+                        <span class="nav-text">Pengaturan</span>
+                    </a>
+                </div>
             </nav>
 
             <!-- Sidebar Footer -->
-            <div class="sidebar-footer p-3 border-top">
-                <div class="d-flex align-items-center">
-                    <div class="status-indicator bg-success me-2"></div>
-                    <small class="text-muted">Sistem Online</small>
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center justify-between text-xs text-gray-500">
+                    <span>Status System</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>Online</span>
+                    </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="labora-main">
+        <!-- Mobile Sidebar Overlay -->
+        <div class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobile-sidebar-overlay"></div>
+
+        <!-- Mobile Sidebar -->
+        <aside class="lg:hidden fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out" 
+               id="mobile-sidebar">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900">Menu</h2>
+                <button type="button" 
+                        class="p-1 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                        id="mobile-sidebar-close">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation (Same as desktop) -->
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                <!-- Same navigation structure as desktop -->
+                <div class="mb-4">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                        Dashboard
+                    </h3>
+                    <a href="/" class="labora-nav-item {{#ifEquals currentPage 'dashboard'}}active{{/ifEquals}}">
+                        <i class="fas fa-chart-pie labora-nav-icon"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                    <a href="/analytics" class="labora-nav-item {{#ifEquals currentPage 'analytics'}}active{{/ifEquals}}">
+                        <i class="fas fa-chart-line labora-nav-icon"></i>
+                        <span class="nav-text">Analytics</span>
+                    </a>
+                </div>
+                <!-- Other navigation sections... -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="labora-main flex-1 min-w-0" id="main-content">
             <!-- Breadcrumb -->
             {{#if breadcrumb}}
-            <nav aria-label="breadcrumb" class="labora-breadcrumb">
-                <div class="container-fluid">
-                    <ol class="breadcrumb mb-0 py-3">
+            <div class="bg-white border-b border-gray-200 px-6 py-3">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="flex items-center space-x-2">
+                        <li>
+                            <a href="/" class="text-gray-400 hover:text-gray-500">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
                         {{#each breadcrumb}}
-                        <li class="breadcrumb-item {{#if @last}}active{{/if}}">
-                            {{#unless @last}}
-                            <a href="{{url}}">{{name}}</a>
+                        <li class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-300 mx-2"></i>
+                            {{#if @last}}
+                                <span class="text-sm font-medium text-gray-900">{{text}}</span>
                             {{else}}
-                            {{name}}
-                            {{/unless}}
+                                <a href="{{url}}" class="text-sm font-medium text-gray-500 hover:text-gray-700">{{text}}</a>
+                            {{/if}}
                         </li>
                         {{/each}}
                     </ol>
-                </div>
-            </nav>
+                </nav>
+            </div>
             {{/if}}
 
             <!-- Page Content -->
             <div class="labora-content">
+                {{#unless body}}
+                <!-- Default Dashboard Content -->
+                <div class="space-y-6">
+                    <!-- Page Header -->
+                    <div class="bg-white rounded-xl shadow-card p-6 border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                                <p class="text-gray-600 mt-1">Selamat datang di Labora Clinical Lab System</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-500">Hari ini</p>
+                                <p class="text-lg font-semibold text-gray-900">{{currentDate}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="labora-card bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                            <div class="labora-card-body">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-blue-100 text-sm">Total Pasien</p>
+                                        <p class="text-3xl font-bold">1,245</p>
+                                        <p class="text-blue-200 text-xs mt-1">+12% dari bulan lalu</p>
+                                    </div>
+                                    <div class="bg-blue-400 bg-opacity-50 p-3 rounded-full">
+                                        <i class="fas fa-user-friends text-2xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="labora-card bg-gradient-to-r from-green-500 to-green-600 text-white">
+                            <div class="labora-card-body">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-green-100 text-sm">Test Selesai</p>
+                                        <p class="text-3xl font-bold">2,847</p>
+                                        <p class="text-green-200 text-xs mt-1">+8% dari bulan lalu</p>
+                                    </div>
+                                    <div class="bg-green-400 bg-opacity-50 p-3 rounded-full">
+                                        <i class="fas fa-flask text-2xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="labora-card bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
+                            <div class="labora-card-body">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-yellow-100 text-sm">Menunggu Hasil</p>
+                                        <p class="text-3xl font-bold">45</p>
+                                        <p class="text-yellow-200 text-xs mt-1">Prioritas tinggi: 8</p>
+                                    </div>
+                                    <div class="bg-yellow-400 bg-opacity-50 p-3 rounded-full">
+                                        <i class="fas fa-clock text-2xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="labora-card bg-gradient-to-r from-red-500 to-red-600 text-white">
+                            <div class="labora-card-body">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-red-100 text-sm">Critical Values</p>
+                                        <p class="text-3xl font-bold">3</p>
+                                        <p class="text-red-200 text-xs mt-1">Perlu tindakan segera</p>
+                                    </div>
+                                    <div class="bg-red-400 bg-opacity-50 p-3 rounded-full">
+                                        <i class="fas fa-exclamation-triangle text-2xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="labora-card">
+                            <div class="labora-card-header">
+                                <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
+                            </div>
+                            <div class="labora-card-body">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button class="labora-btn labora-btn-primary flex flex-col items-center p-4 space-y-2">
+                                        <i class="fas fa-plus text-xl"></i>
+                                        <span class="text-sm">Tambah Pasien</span>
+                                    </button>
+                                    <button class="labora-btn labora-btn-secondary flex flex-col items-center p-4 space-y-2">
+                                        <i class="fas fa-vial text-xl"></i>
+                                        <span class="text-sm">Order Test</span>
+                                    </button>
+                                    <button class="labora-btn labora-btn-secondary flex flex-col items-center p-4 space-y-2">
+                                        <i class="fas fa-qrcode text-xl"></i>
+                                        <span class="text-sm">Scan Barcode</span>
+                                    </button>
+                                    <button class="labora-btn labora-btn-secondary flex flex-col items-center p-4 space-y-2">
+                                        <i class="fas fa-file-medical text-xl"></i>
+                                        <span class="text-sm">Generate Report</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="labora-card">
+                            <div class="labora-card-header">
+                                <h3 class="text-lg font-semibold text-gray-900">Recent Activities</h3>
+                            </div>
+                            <div class="labora-card-body">
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-user text-blue-600 text-sm"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900">Pasien baru terdaftar</p>
+                                            <p class="text-xs text-gray-500">Jane Doe - 5 menit yang lalu</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-check text-green-600 text-sm"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900">Test selesai diverifikasi</p>
+                                            <p class="text-xs text-gray-500">Complete Blood Count - 10 menit yang lalu</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
+                                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-vial text-yellow-600 text-sm"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900">Spesimen diterima</p>
+                                            <p class="text-xs text-gray-500">Blood sample - 15 menit yang lalu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TailwindCSS + Flowbite Demo Components -->
+                    <div class="labora-card">
+                        <div class="labora-card-header">
+                            <h3 class="text-lg font-semibold text-gray-900">TailwindCSS + Flowbite Demo</h3>
+                            <p class="text-sm text-gray-600">Modern UI components dengan TailwindCSS dan Flowbite</p>
+                        </div>
+                        <div class="labora-card-body space-y-6">
+                            <!-- Badges Demo -->
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900 mb-3">Status Badges</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="labora-badge status-requested">Requested</span>
+                                    <span class="labora-badge status-collected">Collected</span>
+                                    <span class="labora-badge status-received">Received</span>
+                                    <span class="labora-badge status-in-progress">In Progress</span>
+                                    <span class="labora-badge status-completed">Completed</span>
+                                    <span class="labora-badge status-verified">Verified</span>
+                                    <span class="labora-badge status-cancelled">Cancelled</span>
+                                </div>
+                            </div>
+
+                            <!-- Buttons Demo -->
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900 mb-3">Button Variants</h4>
+                                <div class="flex flex-wrap gap-3">
+                                    <button class="labora-btn labora-btn-primary">Primary</button>
+                                    <button class="labora-btn labora-btn-secondary">Secondary</button>
+                                    <button class="labora-btn labora-btn-success">Success</button>
+                                    <button class="labora-btn labora-btn-danger">Danger</button>
+                                    <button class="labora-btn labora-btn-primary labora-btn-sm">Small</button>
+                                    <button class="labora-btn labora-btn-primary labora-btn-lg">Large</button>
+                                </div>
+                            </div>
+
+                            <!-- Form Demo -->
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900 mb-3">Form Components</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="labora-label">Patient Name</label>
+                                        <input type="text" class="labora-input" placeholder="Enter patient name">
+                                    </div>
+                                    <div>
+                                        <label class="labora-label">Test Type</label>
+                                        <select class="labora-select">
+                                            <option>Select test type</option>
+                                            <option>Complete Blood Count</option>
+                                            <option>Blood Chemistry</option>
+                                            <option>Urinalysis</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
                 {{{body}}}
+                {{/unless}}
             </div>
         </main>
     </div>
 
-    <!-- Footer Component -->
-    <footer class="labora-footer bg-light border-top mt-auto">
-        <div class="container-fluid">
-            <div class="row align-items-center py-3">
-                <div class="col-md-6">
-                    <span class="text-muted">&copy; 2024 Labora Clinical Lab System. All rights reserved.</span>
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav lg:hidden">
+        <div class="grid grid-cols-5 h-16">
+            <a href="/" class="mobile-nav-item {{#ifEquals currentPage 'dashboard'}}active{{/ifEquals}}">
+                <i class="fas fa-home mobile-nav-icon"></i>
+                <span>Home</span>
+            </a>
+            <a href="/tests" class="mobile-nav-item {{#ifEquals currentPage 'tests'}}active{{/ifEquals}}">
+                <i class="fas fa-flask mobile-nav-icon"></i>
+                <span>Tests</span>
+            </a>
+            <a href="/add" class="mobile-nav-item">
+                <div class="w-12 h-12 bg-labora-500 rounded-full flex items-center justify-center -mt-2">
+                    <i class="fas fa-plus text-white text-lg"></i>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <span class="text-muted me-3">Versi {{appVersion}}</span>
-                    <a href="/help" class="text-decoration-none me-3">Bantuan</a>
-                    <a href="/privacy" class="text-decoration-none me-3">Privasi</a>
-                    <a href="/support" class="text-decoration-none">Dukungan</a>
+                <span class="mt-2">Add</span>
+            </a>
+            <a href="/results" class="mobile-nav-item {{#ifEquals currentPage 'results'}}active{{/ifEquals}}">
+                <i class="fas fa-clipboard-list mobile-nav-icon"></i>
+                <span>Results</span>
+            </a>
+            <a href="/profile" class="mobile-nav-item {{#ifEquals currentPage 'profile'}}active{{/ifEquals}}">
+                <i class="fas fa-user mobile-nav-icon"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="labora-footer bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center py-4">
+                <div class="text-sm text-gray-500">
+                    © 2024 Labora Clinical Lab System. All rights reserved.
+                </div>
+                <div class="flex items-center space-x-4 mt-2 sm:mt-0">
+                    <span class="text-xs text-gray-400">Version 1.0.0</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-xs text-gray-500">System Online</span>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Bottom Navigation (visible on mobile only) -->
-    <nav class="mobile-bottom-nav d-lg-none bg-primary">
-        <div class="d-flex">
-            <a href="/dashboard" class="nav-item {{#ifEquals currentPage 'dashboard'}}active{{/ifEquals}}">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="/orders" class="nav-item {{#ifEquals currentPage 'orders'}}active{{/ifEquals}}">
-                <i class="bi bi-file-earmark-text"></i>
-                <span>Orders</span>
-            </a>
-            <a href="/patients" class="nav-item {{#ifEquals currentPage 'patients'}}active{{/ifEquals}}">
-                <i class="bi bi-people"></i>
-                <span>Pasien</span>
-            </a>
-            <a href="/results" class="nav-item {{#ifEquals currentPage 'results'}}active{{/ifEquals}}">
-                <i class="bi bi-file-earmark-check"></i>
-                <span>Hasil</span>
-            </a>
-            <a href="/reports" class="nav-item {{#ifEquals currentPage 'reports'}}active{{/ifEquals}}">
-                <i class="bi bi-graph-up"></i>
-                <span>Laporan</span>
-            </a>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Loading Spinner Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="labora-spinner w-6 h-6"></div>
+            <span class="text-gray-900">Loading...</span>
         </div>
-    </nav>
+    </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/labora-core.js"></script>
+    <!-- Flowbite JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.js"></script>
     
-    <!-- Page-specific scripts -->
-    {{#if pageJS}}
-    <script src="/assets/js/{{pageJS}}"></script>
-    {{/if}}
+    <!-- Custom JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
 
-    <!-- Additional scripts -->
-    {{{scripts}}}
+        // Mobile sidebar close
+        document.getElementById('mobile-sidebar-close')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Overlay click to close
+        document.getElementById('mobile-sidebar-overlay')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        // Desktop sidebar toggle
+        document.getElementById('sidebar-toggle')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('desktop-sidebar');
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // Global search functionality
+        document.getElementById('global-search')?.addEventListener('input', function(e) {
+            const query = e.target.value;
+            if (query.length > 2) {
+                // Implement search functionality
+                console.log('Searching for:', query);
+            }
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const typeClasses = {
+                success: 'labora-notification-success',
+                error: 'labora-notification-error', 
+                warning: 'labora-notification-warning',
+                info: 'labora-notification-info'
+            };
+            
+            toast.className = `labora-notification ${typeClasses[type]} animate-slide-in-right`;
+            toast.innerHTML = `
+                <div class="p-4 flex items-center justify-between">
+                    <span class="text-sm text-gray-900">${message}</span>
+                    <button type="button" class="text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, duration);
+        }
+
+        // Loading overlay functions
+        function showLoading() {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+        
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+        // Accessibility improvements
+        document.addEventListener('keydown', function(e) {
+            // ESC key to close mobile sidebar
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('mobile-sidebar');
+                const overlay = document.getElementById('mobile-sidebar-overlay');
+                
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
+            }
+        });
+
+        // Auto-hide notifications after successful actions
+        window.addEventListener('load', function() {
+            {{#if notification}}
+                showToast('{{notification.message}}', '{{notification.type}}');
+            {{/if}}
+        });
+    </script>
+
+    <!-- Additional JavaScript -->
+    {{{extraJS}}}
 </body>
 </html>
